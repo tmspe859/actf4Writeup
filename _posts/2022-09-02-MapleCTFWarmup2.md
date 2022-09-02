@@ -38,7 +38,9 @@ Through this, it seems evident that this challenge involves leaking stack inform
 
 Leaking the canary is simple since we have the `printf` function call with a `%s` format parameter. This means the function will keep printing bytes until a null byte is read. From this we can have it print out the bytes of the stack canary by overflowing the buffer up to the stack canary **plus one byte** (we must do this to overwrite the null byte of the stack canary). 
 
-This allows us to then read in the processes stack canary from stdout. This then allows us to freely overflow the buffer, maintain the canary, and hijack the control flow - though we have to remember to add the null byte back into the canary!
+*As a side note, keep in mind that the stack may have more information on it after the canary, so the stack canary should only be the first 7 bytes after our input is printed out*
+
+This allows us to then read in the processes stack canary from stdout. Thus, we could overflow the buffer, maintain the stack canary, and hijack the control flow - though we have to remember to add the null byte back into the canary!
 
 # Defeating ASLR
 
