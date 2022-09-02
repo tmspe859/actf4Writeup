@@ -42,3 +42,6 @@ This allows us to then read in the processes stack canary from stdout. This then
 
 # Defeating ASLR
 
+# Finding the Libc Base Address
+
+# ROP into a Shell
