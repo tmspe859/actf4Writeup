@@ -30,8 +30,15 @@ Lets take a look at the IDA-Pro decompolation of the function to get an overview
 
 ![image](https://user-images.githubusercontent.com/71113694/188115423-4106a326-7684-4230-a1a1-1cbb7dc6ef62.png)
 
-This function is very simple and exhibits a basic buffer overflow since we have a char buffer of size 0x110 on the stack, while the read functions read 0x1337 bytes. It is also significant that there are not only two reads, but two `printf` statements that will read the string that's contained in our buffer. This means that we not only have the ability to overflow the buffer and hijack the programs control flow, but we also have the ability to leak values off of the stack if we craft the string in `buf` carefully.
+This function is very simple and exhibits a basic buffer overflow since we have a char buffer of size 0x108 on the stack, while the read functions read 0x1337 bytes. It is also significant that there are not only two reads, but two `printf` statements that will read the string that's contained in our buffer. This means that we not only have the ability to overflow the buffer and hijack the programs control flow, but we also have the ability to leak values off of the stack if we craft the string in `buf` carefully.
 
 Through this, it seems evident that this challenge involves leaking stack information to bypass the stack canary, buffer overflow to hijack control flow, and ROP into a libc system call.
 
 # Leaking the canary
+
+Leaking the canary is simple since we have the `printf` function call with a `%s` format parameter. This means the function will keep printing bytes until a null byte is read. From this we can have it print out the bytes of the stack canary by overflowing the buffer up to the stack canary **plus one byte** (we must do this to overwrite the null byte of the stack canary). 
+
+This allows us to then read in the processes stack canary from stdout. This then allows us to freely overflow the buffer, maintain the canary, and hijack the control flow - though we have to remember to add the null byte back into the canary!
+
+# Defeating ASLR
+
