@@ -44,6 +44,14 @@ This allows us to then read in the processes stack canary from stdout. Thus, we 
 
 # Defeating ASLR
 
+To defeat the PIE of the main binary, we have to do a little bit of brute-forcing. This is fine since we only have to brute force a nibble, and what we're looking for is a successful jump to right before `vuln` is called in `main` (aka the address `0x12d8`). We do this by guessing what the upper nibble of the second least significant byte of the address will be (in my case, I guessed `0xe`), then keep running the command until we are correct - which we'll know when we re-enter vuln and get the welcome text.
+
+Once we're in `vuln` again, we can do the same trick as with the canary to leak the saved return address, which we know should be the address after the function call or `0x12e2`. Once we have that, we can then calculate the binaries base address and trivialise any returns that have to be done within it. This will allow us to ROP into leaking the libc base address **and** then jump back into a `vuln` funciton call for our last ROP chain.
+
 # Finding the Libc Base Address
 
+To leak libc I did a simple puts(puts) leak. To do this, I found a ROP gadget that simply did `pop rdi; ret;`. From here, we simply need to get the address of the puts pointer from the GOT into rdi, then jump into the puts PLT function (note: we do NOT want to have a call into puts, as this will put a return address onto the stack, breaking our ROP chain!). From this, we get the address of puts in libc, but we also want to leak another address so we can figure out which libc the binary is using! Thus, I leaked the address of read as well, and with these two, we can use the website https://libc.rip/ to lookup libc files based on symbol locaitons, we can then search the libc to find whatever else we may need, as well as calculate the base address of the libc based off of either the puts or read address.
+
 # ROP into a Shell
+
+For our final ROP we just do a buffer overflow, preserve the canary, jump to a `ret` to realign the for libc (otherwise we'll get a segfault) then pop `/bin/bash` into rdi and call `system` which will get us a root shell! If this all works, then we should be able to easily read the flag within the server from there.
