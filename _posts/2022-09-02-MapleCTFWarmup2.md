@@ -56,6 +56,10 @@ To leak libc I did a simple puts(puts) leak. To do this, I found a ROP gadget th
 
 For our final ROP we just do a buffer overflow, preserve the canary, jump to a `ret` to realign the for libc (otherwise we'll get a segfault) then pop `/bin/bash` into rdi and call `system` which will get us a root shell! If this all works, then we should be able to easily read the flag within the server from there.
 
+# Conclusion
+
+This was a nice challenge that involved a *lot* of ROP, and we were able to do so because there were 2 reads within the vuln function (Otherwise we wouldn't have been able to leak the canary without killing the program)!
+
 # Final Script
 ```python3
 #!/bin/env python3 
