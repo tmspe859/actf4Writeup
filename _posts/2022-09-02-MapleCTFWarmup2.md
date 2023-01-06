@@ -61,7 +61,7 @@ For our final ROP we just do a buffer overflow, preserve the canary, jump to a `
 This was a nice challenge that involved a *lot* of ROP, and we were able to do so because there were 2 reads within the vuln function (Otherwise we wouldn't have been able to leak the canary without killing the program)!
 
 # Final Script
-```python3
+```python
 #!/bin/env python3 
 from pwn import *
 
