@@ -11,9 +11,9 @@ This is a writeup about the 2022 BuckeyeCTF challenge `Ronin`
 
 ## File
 
-`
+```
 ronin: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=eb4ccdef02a96139df6de419cbc283e0f26f1d85, for GNU/Linux 3.2.0, not stripped
-`
+```
 
 ## Checksec
 
