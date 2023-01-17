@@ -1,3 +1,8 @@
+* TOC
+{:toc}
+
+This is a writeup about the 2022 BuckeyeCTF challenge `Ronin`
+
 # BuckeyeCTF2022 Ronin Challenge | Thomas Spencer
 
 > Category `pwn` | Difficulty: `medium`
