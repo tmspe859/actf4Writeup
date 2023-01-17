@@ -16,7 +16,7 @@ minimal_mistakes_skin    : "dark" # "neon" "air", "aqua", "contrast", "dark", "d
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Squibb Security"
+title                    : "Squibb Sec"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Squibb"
