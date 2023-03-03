@@ -1,6 +1,10 @@
 * TOC
 {:toc}
 
+# Notice
+
+This is currently just a hack note - aka, then notes I took on the challenge when I was playing. It will be flushed out into a full fleged writeup / walkthrough in the near future :)
+
 This is a writeup about the 2022 BuckeyeCTF challenge `Shogun`
 
 # BuckeyeCTF 2022 Shogun | Thomas Spencer
