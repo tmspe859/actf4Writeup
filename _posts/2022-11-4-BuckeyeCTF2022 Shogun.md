@@ -11,6 +11,10 @@ This is a writeup about the 2022 BuckeyeCTF challenge `Shogun`
 
 > Category: `pwn` | Difficulty: `medium`
 
+> [Download original binary](/assets/binaries/shogun)
+
+> [Download original source code](/assets/binaries/shogunOrigninal.c)
+
 # Recon
 
 ## File
