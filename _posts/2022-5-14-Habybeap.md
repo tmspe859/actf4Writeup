@@ -9,7 +9,7 @@
 
 > `nc habybeap.q.2022.volgactf.ru 21337`
 
-> [Download Archived Binary](/assets/binaries/habybeap)
+> [Download Archived Binary](/assets/binaries/habybeap) `sha256sum: 427c0a06ecee9ae48ff0f419c3cd6a97a9cf6f10825ad88c7309205ba973abca`
 
 # Disclaimer
 
