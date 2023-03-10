@@ -50,19 +50,19 @@ These lead me to believe that unless there's a way to abuse the logic of the pro
 
 * Takes in user input, gives 4 options
 
-    1) Add Note
+    1. Add Note
 
         * Calls `add_note` function
 
-    2) Edit Note
+    2. Edit Note
 
         * Calls `edit_note` function
 
-    3) Delete Note
+    3. Delete Note
 
         * Calls `delete_note` function
 
-    4) Print Note
+    4. Print Note
 
         * Calls `print_note` function
 
