@@ -11,7 +11,7 @@ This is a writeup about the 2022 BuckeyeCTF challenge `Shogun`
 
 > Category: `pwn` | Difficulty: `medium`
 
-> [Download original binary](/assets/binaries/shogun)
+> [Download original binary](/assets/binaries/shogun) `sha256sum: 30b8e78e8036bddb1b8314654a2b8c4e7056a64dff390cba40ddf14c2ded807e`
 
 > [Download original source code](/assets/binaries/shogunOrigninal.c)
 
