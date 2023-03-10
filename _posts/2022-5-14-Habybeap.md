@@ -125,7 +125,9 @@ These lead me to believe that unless there's a way to abuse the logic of the pro
 
 * **IMPORTANT NOTE:** This function does not clear out the address within the pointers buffer. This is a double edged sword, since we can have some easy UAF's using these free'd pointers, but since the `add_note` function checks if the spot in the allocation is free, we can only make a total of **16** allocations.
 
-![image](https://user-images.githubusercontent.com/71113694/224215311-e1c8ec55-17f3-40bf-a2c9-2562f4155e7c.png)
+![image](https://user-images.githubusercontent.com/71113694/224216062-6971dbe2-5c14-4fd7-8324-8360700cd110.png)
+
+*Notice, IDA didn't give the correct decompilation, so I had to look at the assembly view!*
 
 ## print_note
 
