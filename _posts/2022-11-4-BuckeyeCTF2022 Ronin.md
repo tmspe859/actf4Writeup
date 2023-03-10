@@ -11,6 +11,10 @@ This is a writeup about the 2022 BuckeyeCTF challenge `Ronin`
 
 > Category `pwn` | Difficulty: `medium`
 
+> [Download original binary](/assets/binaries/ronin) `sha256sum: bc13b4d992dc81c7a4d6a6f70928997be7c43beae68ec91b6a1fadaac7cf6865`
+
+> [Download original source code](/assets/binaries/roninOrig.c)
+
 # Recon
 
 ## File
