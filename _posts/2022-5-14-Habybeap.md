@@ -101,6 +101,8 @@ These lead me to believe that unless there's a way to abuse the logic of the pro
 
     * **Overflow in heap!**
 
+![image](https://user-images.githubusercontent.com/71113694/224215521-c883032c-e748-4289-91e9-c24a6ef38137.png)
+
 ## edit_note
 
 * Takes in an index
@@ -113,6 +115,8 @@ These lead me to believe that unless there's a way to abuse the logic of the pro
 
     * Not enough for a double free, but enough to corrupt the next pointer slightly
 
+![image](https://user-images.githubusercontent.com/71113694/224215255-b4247a16-5e9a-4f24-b60d-270d49b09a5a.png)
+
 ## delete_note
 
 * Frees a note at an index
@@ -120,6 +124,8 @@ These lead me to believe that unless there's a way to abuse the logic of the pro
     * Only checks that the input value is greater than 0!
 
 * **IMPORTANT NOTE:** This function does not clear out the address within the pointers buffer. This is a double edged sword, since we can have some easy UAF's using these free'd pointers, but since the `add_note` function checks if the spot in the allocation is free, we can only make a total of **16** allocations.
+
+![image](https://user-images.githubusercontent.com/71113694/224215311-e1c8ec55-17f3-40bf-a2c9-2562f4155e7c.png)
 
 ## print_note
 
