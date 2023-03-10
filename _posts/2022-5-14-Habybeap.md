@@ -6,6 +6,8 @@
 
 > `nc habybeap.q.2022.volgactf.ru 21337`
 
+> [Download Archived Binary](/assets/binaries/habybeap)
+
 # Disclaimer
 
 This is a post-ctf solve. Though I wasn't able to solve it during the CTF, I also couldn't find any other writeups for it, so I took it upon myself to solve and make a writeup about it! Do notice, I am going to solve this challenge with an up to date libc (glibc version 2.35), rather than the one provided (glibc version 2.33), for no particular reason.
