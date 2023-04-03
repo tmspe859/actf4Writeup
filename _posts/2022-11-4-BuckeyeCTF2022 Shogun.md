@@ -7,7 +7,7 @@ This is currently just a hack note - aka, then notes I took on the challenge whe
 
 This is a writeup about the 2022 BuckeyeCTF challenge `Shogun`
 
-# BuckeyeCTF 2022 Shogun | Thomas Spencer
+# BuckeyeCTF 2022 Shogun | Squibb
 
 > Category: `pwn` | Difficulty: `medium`
 
