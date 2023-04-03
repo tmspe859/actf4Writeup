@@ -1,7 +1,7 @@
 * TOC
 {:toc}
 
-# VolgaCTF 2022, Habybeap | Thomas Spencer
+# VolgaCTF 2022, Habybeap | Squibb
 
 > This is a basic heap challenge. Flag is in /task/flag.txt.
 
