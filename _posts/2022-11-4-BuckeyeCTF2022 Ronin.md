@@ -7,7 +7,7 @@ This is currently just a hack note - aka, then notes I took on the challenge whe
 
 This is a writeup about the 2022 BuckeyeCTF challenge `Ronin`
 
-# BuckeyeCTF2022 Ronin Challenge | Thomas Spencer
+# BuckeyeCTF2022 Ronin Challenge | Squibb
 
 > Category `pwn` | Difficulty: `medium`
 
